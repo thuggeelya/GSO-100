@@ -24,6 +24,6 @@ public class MyServletTest {
 
         new MyServlet().doPost(request, response);
 
-        verify(part).write(eq("/var/tmp/" + fileName));
+        verify(part, times(1)).write(eq("/var/tmp/" + fileName));
     }
 }
