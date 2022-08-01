@@ -10,8 +10,6 @@ import static org.mockito.Mockito.*;
 
 public class MyServletTest {
 
-    private static final String FILE_NAME = "src/test/resources/file.pdf";
-
     @Test
     public void isUploaded() throws Exception {
         HttpServletRequest request = mock(HttpServletRequest.class);
@@ -19,12 +17,13 @@ public class MyServletTest {
         RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
         Part part = mock(Part.class);
 
-        when(part.getSubmittedFileName()).thenReturn(FILE_NAME);
+        String fileName = "src/test/resources/file.pdf";
+        when(part.getSubmittedFileName()).thenReturn(fileName);
         when(request.getPart("file")).thenReturn(part);
         when(request.getRequestDispatcher("/index.jsp")).thenReturn(requestDispatcher);
 
         new MyServlet().doPost(request, response);
 
-        verify(part).write(eq("/var/tmp/" + FILE_NAME));
+        verify(part).write(eq("/var/tmp/" + fileName));
     }
 }
