@@ -22,7 +22,7 @@ public class ItemController extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("doGet method");
-        response.setContentType("application/json; charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.println(gson.toJson(service.getItems()));
         writer.flush();
@@ -31,7 +31,7 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("doPost method");
-        response.setContentType("application/json; charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         String action = request.getParameter("action");
         PrintWriter writer = response.getWriter();
         Item item;
