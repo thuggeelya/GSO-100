@@ -15,11 +15,10 @@ public class DatabaseConnection {
 
     public static Connection initializeDatabase() throws SQLException, ClassNotFoundException, IOException {
         Properties properties = getProperties();
-
-        String dbDriver = properties.getProperty("database.driver");
-        String dbURL = properties.getProperty("database.url");
-        String dbName = properties.getProperty("database.name");
-        String dbUser = properties.getProperty("database.user");
+        String dbDriver =   properties.getProperty("database.driver");
+        String dbURL =      properties.getProperty("database.url");
+        String dbName =     properties.getProperty("database.name");
+        String dbUser =     properties.getProperty("database.user");
         String dbPassword = properties.getProperty("database.password");
         Class.forName(dbDriver);
         Logger.getGlobal().info("connecting to " + dbURL);

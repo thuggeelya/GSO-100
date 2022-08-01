@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 public class ItemRepository implements ProjectRepository<Item> {
 
     private static final ItemRepository instance = new ItemRepository();
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     public static ItemRepository getInstance() {
         return instance;
@@ -24,7 +25,7 @@ public class ItemRepository implements ProjectRepository<Item> {
         try {
             return DatabaseConnection.initializeDatabase();
         } catch (SQLException | ClassNotFoundException | IOException e) {
-            Logger.getGlobal().severe(e.getMessage());
+            logger.severe(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -39,6 +40,7 @@ public class ItemRepository implements ProjectRepository<Item> {
                 items.add(new Item(rs.getInt("code"), rs.getString("name"), rs.getInt("price")));
             }
         } catch (SQLException e) {
+            logger.severe(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -47,8 +49,7 @@ public class ItemRepository implements ProjectRepository<Item> {
 
     @Override
     public boolean add(Item item) {
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection
+        try (PreparedStatement statement = getConnection()
                      .prepareStatement("INSERT INTO items VALUES(?, ?, ?)")) {
             statement.setInt(1, item.getCode());
             statement.setString(2, item.getName());
@@ -56,36 +57,33 @@ public class ItemRepository implements ProjectRepository<Item> {
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            Logger.getGlobal().warning(e.getSQLState());
+            logger.warning(e.getSQLState());
             return false;
         }
     }
 
     @Override
-    public boolean remove(Item item) {
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection
-                     .prepareStatement("DELETE FROM items WHERE code=" + item.getCode())) {
+    public boolean removeById(int code) {
+        try (PreparedStatement statement = getConnection().prepareStatement("DELETE FROM items WHERE code=" + code)) {
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            Logger.getGlobal().warning(e.getSQLState());
+            logger.warning(e.getSQLState());
             return false;
         }
     }
 
     @Override
-    public boolean edit(Item oldItem, Item newItem) {
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection
-                     .prepareStatement("UPDATE items SET code=?, name=?, price=? WHERE code=" + oldItem.getCode())) {
+    public boolean editById(int oldCode, Item newItem) {
+        try (PreparedStatement statement = getConnection()
+                     .prepareStatement("UPDATE items SET code=?, name=?, price=? WHERE code=" + oldCode)) {
             statement.setInt(1, newItem.getCode());
             statement.setString(2, newItem.getName());
             statement.setInt(3, newItem.getPrice());
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            Logger.getGlobal().warning(e.getSQLState());
+            logger.warning(e.getSQLState());
             return false;
         }
     }

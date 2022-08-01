@@ -6,6 +6,6 @@ public interface ProjectRepository<T> {
 
     List<T> retrieveAll();
     boolean add(T t);
-    boolean remove(T t);
-    boolean edit(T oldT, T newT);
+    boolean removeById(int id);
+    boolean editById(int oldId, T newT);
 }

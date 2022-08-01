@@ -6,7 +6,6 @@
     <servlet>
         <servlet-name>itemController</servlet-name>
         <servlet-class>com.example.task3.controller.ItemController</servlet-class>
-        <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>itemController</servlet-name>

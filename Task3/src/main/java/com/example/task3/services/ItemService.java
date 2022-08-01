@@ -13,7 +13,7 @@ public class ItemService {
         return instance;
     }
 
-    public ItemRepository repository;
+    private final ItemRepository repository;
 
     public ItemService(ItemRepository repository) {
         this.repository = repository;
@@ -27,11 +27,26 @@ public class ItemService {
         return repository.add(item);
     }
 
-    public boolean removeItem(Item item) {
-        return repository.remove(item);
+    public boolean removeItem(int code) {
+        return repository.removeById(code);
     }
 
-    public boolean editItem(Item oldItem, Item newItem) {
-        return repository.edit(oldItem, newItem);
+    public boolean editItem(int oldCode, Item newItem) {
+        return repository.editById(oldCode, newItem);
+    }
+
+    @SuppressWarnings("usused")
+    public Item findByCode(int code) {
+        List<Item> items = getItems();
+
+        for (Item i : items) {
+            int iCode = i.getCode();
+
+            if (code == iCode) {
+                return new Item(iCode, i.getName(), i.getPrice());
+            }
+        }
+
+        return null;
     }
 }

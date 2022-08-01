@@ -1,9 +1,8 @@
 package com.example.task3.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Item implements Serializable {
+public class Item {
 
     private final int code;
     private final String name;
