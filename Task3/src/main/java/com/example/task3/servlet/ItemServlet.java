@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
 
+import static java.lang.Integer.parseInt;
+
 @WebServlet(name = "itemController", value = "/items")
 public class ItemServlet extends HttpServlet {
 
@@ -24,8 +26,7 @@ public class ItemServlet extends HttpServlet {
         logger.info("doGet method");
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter writer = response.getWriter();
-        writer.println(gson.toJson(service.getItems()));
-        writer.flush();
+        write(writer, service.getItems());
     }
 
     @Override
@@ -40,32 +41,24 @@ public class ItemServlet extends HttpServlet {
             case "add":
                 item = getItem(request);
                 logger.info(service.addItem(item) ? "item №" + item.getCode() + " was added successfully" :
-                                "error adding new item");
+                        "error adding new item");
                 service.addItem(item);
-                write(writer);
+                write(writer, item);
                 break;
             case "edit":
-                try {
-                    item = getItem(request);
-                    int itemCode = item.getCode();
-                    int oldCode = Integer.parseInt(request.getParameter("oldCode"));
-                    logger.info(service.editItem(oldCode, item) ? "item №" + itemCode + " was edited successfully" :
-                                    "error editing item №" + itemCode);
-                    write(writer);
-                } catch (RuntimeException e) {
-                    logger.severe(e.getMessage());
-                    throw e;
-                }
+                item = getItem(request);
+                int itemCode = item.getCode();
+                int oldCode = parseInt(request.getParameter("oldCode"));
+                logger.info(service.editItem(oldCode, item) ? "item №" + itemCode + " was edited successfully" :
+                        "error editing item №" + itemCode);
+                write(writer, item);
                 break;
             case "remove":
-                try {
-                    int code = Integer.parseInt(request.getParameter("code"));
-                    logger.info(service.removeItem(code) ? "item №" + code + " was removed successfully" :
-                                    "error removing item №" + code);
-                    write(writer);
-                } catch (RuntimeException e) {
-                    logger.warning(e.getMessage());
-                }
+                int code = parseInt(request.getParameter("code"));
+                item = service.findByCode(code);
+                logger.info(service.removeItem(code) ? "item №" + code + " was removed successfully" :
+                        "error removing item №" + code);
+                write(writer, item);
                 break;
             default:
                 throw new IllegalArgumentException("Illegal request parameters ..");
@@ -75,9 +68,9 @@ public class ItemServlet extends HttpServlet {
     private Item getItem(HttpServletRequest request) {
         try {
             return new Item(
-                    Integer.parseInt(request.getParameter("code")),
+                    parseInt(request.getParameter("code")),
                     request.getParameter("name"),
-                    Integer.parseInt(request.getParameter("price"))
+                    parseInt(request.getParameter("price"))
             );
         } catch (RuntimeException e) {
             logger.severe(e.getMessage());
@@ -85,8 +78,8 @@ public class ItemServlet extends HttpServlet {
         }
     }
 
-    private void write(PrintWriter writer) {
-        writer.println(gson.toJson(service.getItems()));
+    private void write(PrintWriter writer, Object o) {
+        writer.println(gson.toJson(o));
         writer.flush();
     }
 }
