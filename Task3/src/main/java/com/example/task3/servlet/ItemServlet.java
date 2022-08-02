@@ -1,4 +1,4 @@
-package com.example.task3.controller;
+package com.example.task3.servlet;
 
 import com.example.task3.dto.Item;
 import com.example.task3.services.ItemService;
@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 @WebServlet(name = "itemController", value = "/items")
-public class ItemController extends HttpServlet {
+public class ItemServlet extends HttpServlet {
 
     private final ItemService service = ItemService.getInstance();
     private final Logger logger = Logger.getLogger(getClass().getName());

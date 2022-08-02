@@ -16,6 +16,7 @@ public class ItemRepository implements ProjectRepository<Item> {
 
     private static final ItemRepository instance = new ItemRepository();
     private final Logger logger = Logger.getLogger(getClass().getName());
+    private final DatabaseConnection dbConnection = new DatabaseConnection();
 
     public static ItemRepository getInstance() {
         return instance;
@@ -23,7 +24,7 @@ public class ItemRepository implements ProjectRepository<Item> {
 
     private Connection getConnection() {
         try {
-            return DatabaseConnection.initializeDatabase();
+            return dbConnection.initializeDatabase();
         } catch (SQLException | ClassNotFoundException | IOException e) {
             logger.severe(e.getMessage());
             throw new RuntimeException(e);
