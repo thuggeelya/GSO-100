@@ -36,5 +36,6 @@ public class MyServlet extends HttpServlet {
 
         out.write("</body></html>");
         out.flush();
+        out.close();
     }
 }
