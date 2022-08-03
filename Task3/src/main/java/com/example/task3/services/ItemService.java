@@ -2,21 +2,17 @@ package com.example.task3.services;
 
 import com.example.task3.dto.Item;
 import com.example.task3.repositories.ItemRepository;
+import com.example.task3.repositories.ProjectRepository;
 
 import java.util.List;
 
 public class ItemService {
 
-    private static final ItemService instance = new ItemService(ItemRepository.getInstance());
+    private static final ItemService instance = new ItemService();
+    private final ProjectRepository<Item> repository = ItemRepository.getInstance();
 
     public static ItemService getInstance() {
         return instance;
-    }
-
-    private final ItemRepository repository;
-
-    public ItemService(ItemRepository repository) {
-        this.repository = repository;
     }
 
     public List<Item> getItems() {

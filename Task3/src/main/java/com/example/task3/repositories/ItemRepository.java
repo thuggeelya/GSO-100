@@ -14,11 +14,11 @@ import java.util.logging.Logger;
 
 public class ItemRepository implements ProjectRepository<Item> {
 
-    private static final ItemRepository instance = new ItemRepository();
+    private static final ProjectRepository<Item> instance = new ItemRepository();
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final DatabaseConnection dbConnection = new DatabaseConnection();
 
-    public static ItemRepository getInstance() {
+    public static ProjectRepository<Item> getInstance() {
         return instance;
     }
 

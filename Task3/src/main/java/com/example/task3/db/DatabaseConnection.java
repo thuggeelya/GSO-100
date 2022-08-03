@@ -21,7 +21,7 @@ public class DatabaseConnection {
         String dbUser =     properties.getProperty("database.user");
         String dbPassword = properties.getProperty("database.password");
         Class.forName(dbDriver);
-        Logger.getGlobal().info("connecting to " + dbURL);
+        Logger.getLogger(getClass().getName()).info("connecting to " + dbURL);
         return DriverManager.getConnection(dbURL + dbName,
                 dbUser,
                 dbPassword);
