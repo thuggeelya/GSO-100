@@ -4,6 +4,7 @@ import com.example.task3.dto.Item;
 import com.example.task3.services.ItemService;
 import com.google.gson.Gson;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,38 +31,40 @@ public class ItemServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         logger.info("doPost method");
         response.setContentType("application/json;charset=UTF-8");
         String action = request.getParameter("action");
         PrintWriter writer = response.getWriter();
         Item item;
+        int code;
 
         switch (action == null ? "action" : action) {
             case "add":
                 item = getItem(request);
-                logger.info(service.addItem(item) ? "item №" + item.getCode() + " was added successfully" :
-                        "error adding new item");
+                code = item.getCode();
+                logger.info(service.addItem(item) ? "item №" + code + " was added successfully" :
+                        "error adding new item №" + code);
                 service.addItem(item);
                 write(writer, item);
                 break;
             case "edit":
                 item = getItem(request);
-                int itemCode = item.getCode();
+                code = item.getCode();
                 int oldCode = parseInt(request.getParameter("oldCode"));
-                logger.info(service.editItem(oldCode, item) ? "item №" + itemCode + " was edited successfully" :
-                        "error editing item №" + itemCode);
+                logger.info(service.editItem(oldCode, item) ? "item №" + code + " was edited successfully" :
+                        "error editing item №" + code);
                 write(writer, item);
                 break;
             case "remove":
-                int code = parseInt(request.getParameter("code"));
+                code = parseInt(request.getParameter("code"));
                 item = service.findByCode(code);
                 logger.info(service.removeItem(code) ? "item №" + code + " was removed successfully" :
                         "error removing item №" + code);
                 write(writer, item);
                 break;
             default:
-                throw new IllegalArgumentException("Illegal request parameters ..");
+                throw new ServletException("Unable execute " + action);
         }
     }
 
