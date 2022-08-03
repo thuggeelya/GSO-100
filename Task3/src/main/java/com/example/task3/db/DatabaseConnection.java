@@ -28,18 +28,19 @@ public class DatabaseConnection {
     }
 
     private static Properties getProperties() throws IOException {
-        URL resource = DatabaseConnection.class.getClassLoader().getResource("database.properties");
+        String fileName = "database.properties";
+        URL resource = DatabaseConnection.class.getClassLoader().getResource(fileName);
 
         if (resource == null) {
-            throw new IOException("Unable get resource with name: database.properties");
+            throw new IOException("Unable get resource with name: " + fileName);
         }
 
         File file = new File(resource.getFile());
 
         try (InputStream input = Files.newInputStream(file.toPath())) {
-            Properties prop = new Properties();
-            prop.load(input);
-            return prop;
+            Properties properties = new Properties();
+            properties.load(input);
+            return properties;
         }
     }
 }
