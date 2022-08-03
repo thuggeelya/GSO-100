@@ -16,14 +16,11 @@ public class MyServletTest {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private File outputFile;
 
     @Before
-    public void setVars() {
+    public void setMocks() {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
-        outputFile = new File("src/test/resources/output.html");
-        outputFile.deleteOnExit();
     }
 
     @Test
@@ -48,6 +45,9 @@ public class MyServletTest {
     }
 
     private boolean getResultByName(String name, String expectedMessage) {
+        File outputFile = new File("src/test/resources/output.html");
+        outputFile.deleteOnExit();
+
         try (PrintWriter writer = new PrintWriter(outputFile);
              BufferedReader reader = new BufferedReader(new FileReader(outputFile))) {
 
