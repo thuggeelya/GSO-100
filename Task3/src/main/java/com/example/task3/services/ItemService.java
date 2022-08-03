@@ -35,7 +35,6 @@ public class ItemService {
         return repository.editById(oldCode, newItem);
     }
 
-    @SuppressWarnings("usused")
     public Item findByCode(int code) {
         List<Item> items = getItems();
 
