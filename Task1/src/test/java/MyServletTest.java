@@ -54,8 +54,6 @@ public class MyServletTest {
             when(response.getWriter()).thenReturn(writer);
             when(request.getParameter("name")).thenReturn(name);
             new MyServlet().doPost(request, response);
-
-            reader.readLine();
             return reader.readLine().contains(expectedMessage);
         } catch (IOException e) {
             throw new RuntimeException(e);

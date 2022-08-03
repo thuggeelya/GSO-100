@@ -24,14 +24,11 @@ public class MyServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         out.write("<html><body>");
-        out.println();
 
         if ((name == null) || (name.trim().isEmpty())) {
             out.write("<h2>Error: the name is null</h2>");
-            out.println();
         } else {
             out.write("<h2>Hello, " + name + "</h2>");
-            out.println();
         }
 
         out.write("</body></html>");
