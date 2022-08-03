@@ -13,7 +13,7 @@ public class MyServlet extends HttpServlet {
     private String name;
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         name = request.getParameter("name");
         request.setAttribute("name", name);
         doGet(request, response);
@@ -23,14 +23,18 @@ public class MyServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<html><body>");
+        out.write("<html><body>");
+        out.println();
 
         if ((name == null) || (name.trim().isEmpty())) {
-            out.println("<h2>Error: the name is null ..</h2>");
+            out.write("<h2>Error: the name is null</h2>");
+            out.println();
         } else {
-            out.println("<h1>Hello, " + name + "</h1>");
+            out.write("<h2>Hello, " + name + "</h2>");
+            out.println();
         }
 
-        out.println("</body></html>");
+        out.write("</body></html>");
+        out.flush();
     }
 }
