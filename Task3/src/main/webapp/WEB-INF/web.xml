@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <servlet>
-        <servlet-name>itemController</servlet-name>
+        <servlet-name>itemServlet</servlet-name>
         <servlet-class>com.example.task3.servlet.ItemServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>itemController</servlet-name>
+        <servlet-name>itemServlet</servlet-name>
         <url-pattern>/items</url-pattern>
     </servlet-mapping>
 </web-app>
