@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 import static java.lang.Integer.parseInt;
 
-@WebServlet(name = "itemController", value = "/items")
+@WebServlet(name = "itemServlet", value = "/items")
 public class ItemServlet extends HttpServlet {
 
     private final ItemService service = ItemService.getInstance();

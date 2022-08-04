@@ -24,7 +24,7 @@ public class ItemRepository implements ProjectRepository<Item> {
 
     private Connection getConnection() {
         try {
-            return dbConnection.initializeDatabase();
+            return dbConnection.getConnection();
         } catch (SQLException | ClassNotFoundException | IOException e) {
             logger.severe(e.getMessage());
             throw new RuntimeException(e);
@@ -41,7 +41,7 @@ public class ItemRepository implements ProjectRepository<Item> {
                 items.add(new Item(rs.getInt("code"), rs.getString("name"), rs.getInt("price")));
             }
         } catch (SQLException e) {
-            logger.severe(e.getMessage());
+            logger.severe(e.toString());
             throw new RuntimeException(e);
         }
 
@@ -58,7 +58,7 @@ public class ItemRepository implements ProjectRepository<Item> {
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            logger.warning(e.getSQLState());
+            logger.warning(e.toString());
             return false;
         }
     }
@@ -66,10 +66,9 @@ public class ItemRepository implements ProjectRepository<Item> {
     @Override
     public boolean removeById(int code) {
         try (PreparedStatement statement = getConnection().prepareStatement("DELETE FROM items WHERE code=" + code)) {
-            statement.executeUpdate();
-            return true;
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            logger.warning(e.getSQLState());
+            logger.warning(e.toString());
             return false;
         }
     }
@@ -81,10 +80,9 @@ public class ItemRepository implements ProjectRepository<Item> {
             statement.setInt(1, newItem.getCode());
             statement.setString(2, newItem.getName());
             statement.setInt(3, newItem.getPrice());
-            statement.executeUpdate();
-            return true;
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            logger.warning(e.getSQLState());
+            logger.warning(e.toString());
             return false;
         }
     }

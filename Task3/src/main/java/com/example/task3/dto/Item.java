@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Item {
 
-    private final int code;
-    private final String name;
-    private final int price;
+    private int code;
+    private String name;
+    private int price;
 
     public Item(int code, String name, int price) {
         this.code = code;
@@ -24,6 +24,18 @@ public class Item {
 
     public int getPrice() {
         return price;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     @Override

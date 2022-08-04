@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class DatabaseConnection {
 
-    public Connection initializeDatabase() throws SQLException, ClassNotFoundException, IOException {
+    public Connection getConnection() throws SQLException, ClassNotFoundException, IOException {
         Properties properties = getProperties();
         String dbDriver =   properties.getProperty("database.driver");
         String dbURL =      properties.getProperty("database.url");
