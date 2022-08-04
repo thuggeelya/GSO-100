@@ -35,11 +35,12 @@ public class ItemServlet extends HttpServlet {
         logger.info("doPost method");
         response.setContentType("application/json;charset=UTF-8");
         String action = request.getParameter("action");
+        action = (action == null) ? "action" : action;
         PrintWriter writer = response.getWriter();
         Item item;
         int code;
 
-        switch (action == null ? "action" : action) {
+        switch (action) {
             case "add":
                 item = getItem(request);
                 code = item.getCode();
