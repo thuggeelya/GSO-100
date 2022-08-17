@@ -31,7 +31,7 @@ public class ItemServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         logger.info("doPost method");
         response.setContentType("application/json;charset=UTF-8");
         String action = request.getParameter("action");
