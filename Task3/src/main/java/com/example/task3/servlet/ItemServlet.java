@@ -46,7 +46,6 @@ public class ItemServlet extends HttpServlet {
                 code = item.getCode();
                 logger.info(service.addItem(item) ? "item №" + code + " was added successfully" :
                         "error adding new item №" + code);
-                service.addItem(item);
                 write(writer, item);
                 break;
             case "edit":
