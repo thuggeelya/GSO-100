@@ -83,4 +83,28 @@ public class ServletTest {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    public void parseRemove() {
+        String line;
+        File outputFile = new File("src/test/resources/output.html");
+        outputFile.deleteOnExit();
+
+        try (PrintWriter writer = new PrintWriter(outputFile);
+             BufferedReader reader = new BufferedReader(new FileReader(outputFile))) {
+            when(response.getWriter()).thenReturn(writer);
+            when(request.getParameter("action")).thenReturn("remove");
+            when(request.getParameter("code")).thenReturn("2");
+            new ItemServlet().doPost(request, response);
+            String gsonResult = "";
+
+            while ((line = reader.readLine()) != null) {
+                gsonResult = gsonResult.concat(line + System.lineSeparator());
+            }
+
+            assertEquals(gson.toJson(new Item(2, "testItem2", 2)).trim(), gsonResult.trim());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
