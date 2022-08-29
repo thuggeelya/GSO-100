@@ -11,6 +11,9 @@ public class ItemService {
     private static final ItemService instance = new ItemService();
     private final ProjectRepository<Item> repository = ItemRepository.getInstance();
 
+    private ItemService() {
+    }
+
     public static ItemService getInstance() {
         return instance;
     }

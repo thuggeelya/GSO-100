@@ -18,6 +18,9 @@ public class ItemRepository implements ProjectRepository<Item> {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final DatabaseConnection dbConnection = new DatabaseConnection();
 
+    private ItemRepository() {
+    }
+
     public static ProjectRepository<Item> getInstance() {
         return instance;
     }
